@@ -1,0 +1,41 @@
+{
+  "description": "Original assets before C / SPLIT migration",
+  "files": [
+    {
+      "path": "logo/7logo-2-01.png",
+      "sha256": "036fd004535814b69217b2cbdad90e9a6cd7182495f7e8f0a9d74571a5558edb"
+    },
+    {
+      "path": "logo/7logo-2-01.svg",
+      "sha256": "ef3ebcce58c008d300cd257a9b2b01c36852e3374f363a64747067b14a1323af"
+    },
+    {
+      "path": "logo/7logo-blue-1.png",
+      "sha256": "b169d9a413a9a72cb07356a9c1d345e436f8b51d1bbfdf4a2659a0e0a8b1c908"
+    },
+    {
+      "path": "logo/7logo-blue.png",
+      "sha256": "aa150c522c662bb87a465023c14fc7041d91d42ca9071a75e4a97558aac4b06d"
+    },
+    {
+      "path": "logo/7logo-new-01.png",
+      "sha256": "85c9f7fd7795e5e42f625e1eb4e598602bab7f6eb6e722d3b92d3f17814241da"
+    },
+    {
+      "path": "logo/7logo-new.png",
+      "sha256": "6f72b2fa66f577e6d09843b3cd35fbcc1ef884b809f57a23c39f399679d8f9b6"
+    },
+    {
+      "path": "logo/7logo-new.svg",
+      "sha256": "e777f35648875cde5b18be149b12f12d3fe4f52e96f5fb9627189e2d85a77cbe"
+    },
+    {
+      "path": "logo/7logo.ai",
+      "sha256": "04969b871e0af7652efc62196e8c8b8ae256369d27a352690fff1d12c9fb2341"
+    },
+    {
+      "path": "logo/7logo.svg",
+      "sha256": "6cfbacb58e959acd95661efc7fe1f5daa62214df44cf0695300f149a8ef8d4c8"
+    }
+  ]
+}
