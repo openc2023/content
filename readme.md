@@ -15,7 +15,7 @@
 
 以上路径也提供同名 `.png`。全套 18 款 SVG 位于 `logo/studio7-c/svg/`，对应 PNG 位于 `logo/studio7-c/png/`；图标 PNG 为 1024 × 1024，横向组合为 1800 × 1024。原生可编辑文件为 `logo/studio7-c/source/studio7-c.ai`。
 
-`test.html` 提供全套资源预览；`index.html` 保持原来的黑底单标展示，改用新版白色镂空标。
+`index.html` 首页直接展示全部 18 款标志及 SVG / PNG 下载入口；`test.html` 保留同样的资源预览。
 
 ## 历史与兼容
 
