@@ -1,0 +1,164 @@
+{
+  "brand": "STUDIO 7",
+  "concept": "C / SPLIT",
+  "variants": [
+    {
+      "name": "01-full-positive-transparent",
+      "label": "完整正形 · 黑圆白 t · 透明背景",
+      "mode": "full",
+      "ink": 0,
+      "bg": null,
+      "whitepart": 255
+    },
+    {
+      "name": "02-full-reverse-transparent",
+      "label": "完整反形 · 白圆黑 t · 透明背景",
+      "mode": "full",
+      "ink": 255,
+      "bg": null,
+      "whitepart": 0
+    },
+    {
+      "name": "03-full-positive-white-bg",
+      "label": "完整正形 · 白底",
+      "mode": "full",
+      "ink": 0,
+      "bg": 255,
+      "whitepart": 255
+    },
+    {
+      "name": "04-full-reverse-black-bg",
+      "label": "完整反形 · 黑底",
+      "mode": "full",
+      "ink": 255,
+      "bg": 0,
+      "whitepart": 0
+    },
+    {
+      "name": "05-split-black-transparent",
+      "label": "黑色三分块 · t 镂空",
+      "mode": "split",
+      "ink": 0,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "06-split-white-transparent",
+      "label": "白色三分块 · t 镂空",
+      "mode": "split",
+      "ink": 255,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "07-split-black-white-bg",
+      "label": "黑色三分块 · 白底",
+      "mode": "split",
+      "ink": 0,
+      "bg": 255,
+      "whitepart": null
+    },
+    {
+      "name": "08-split-white-black-bg",
+      "label": "白色三分块 · 黑底",
+      "mode": "split",
+      "ink": 255,
+      "bg": 0,
+      "whitepart": null
+    },
+    {
+      "name": "09-t-black-transparent",
+      "label": "单独 t 形 · 黑色透明底",
+      "mode": "t",
+      "ink": 0,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "10-t-white-transparent",
+      "label": "单独 t 形 · 白色透明底",
+      "mode": "t",
+      "ink": 255,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "11-t-black-white-bg",
+      "label": "单独 t 形 · 白底黑形",
+      "mode": "t",
+      "ink": 0,
+      "bg": 255,
+      "whitepart": null
+    },
+    {
+      "name": "12-t-white-black-bg",
+      "label": "单独 t 形 · 黑底白形",
+      "mode": "t",
+      "ink": 255,
+      "bg": 0,
+      "whitepart": null
+    },
+    {
+      "name": "13-split-outline-black",
+      "label": "三分块轮廓 · 黑线透明底",
+      "mode": "split-outline",
+      "ink": 0,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "14-split-outline-white",
+      "label": "三分块轮廓 · 白线透明底",
+      "mode": "split-outline",
+      "ink": 255,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "15-t-outline-black",
+      "label": "单独 t 轮廓 · 黑线透明底",
+      "mode": "t-outline",
+      "ink": 0,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "16-t-outline-white",
+      "label": "单独 t 轮廓 · 白线透明底",
+      "mode": "t-outline",
+      "ink": 255,
+      "bg": null,
+      "whitepart": null
+    },
+    {
+      "name": "17-lockup-positive",
+      "label": "横向字标组合 · 黑白透明底",
+      "mode": "lockup",
+      "ink": 0,
+      "bg": null,
+      "whitepart": 255
+    },
+    {
+      "name": "18-lockup-reverse",
+      "label": "横向字标组合 · 白黑透明底",
+      "mode": "lockup",
+      "ink": 255,
+      "bg": null,
+      "whitepart": 0
+    }
+  ],
+  "aliases": {
+    "studio7": "05-split-black-transparent",
+    "studio7-white": "06-split-white-transparent",
+    "studio7-full": "01-full-positive-transparent",
+    "studio7-full-reverse": "02-full-reverse-transparent",
+    "studio7-t": "09-t-black-transparent",
+    "studio7-t-white": "10-t-white-transparent",
+    "7logo": "05-split-black-transparent",
+    "7logo-new": "05-split-black-transparent",
+    "7logo-2-01": "05-split-black-transparent",
+    "7logo-blue": "05-split-black-transparent",
+    "7logo-blue-1": "05-split-black-transparent",
+    "7logo-new-01": "05-split-black-transparent"
+  }
+}
