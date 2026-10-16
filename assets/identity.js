@@ -10,7 +10,51 @@ function buildMask(){if(!logo.complete||!logo.naturalWidth||!HW)return;const c=d
 logo.onload=()=>{buildMask();renderOnce=true};window.addEventListener('resize',resize,{passive:true});window.addEventListener('pointermove',e=>{pointer={x:e.clientX,y:e.clientY}},{passive:true});document.addEventListener('pointerleave',()=>{pointer={x:-999,y:-999}});document.addEventListener('pointerdown',e=>{if(e.target.closest('button,a,input'))return;ripples.push({x:e.clientX,y:e.clientY,t:time});ripples=ripples.slice(-4)});
 new IntersectionObserver(e=>{heroVisible=e[0].isIntersecting;renderOnce=true},{threshold:0}).observe(hero);
 function colors(){const light=root.dataset.theme==='light';return{accent:light?'26,86,145':'114,185,255',ink:light?'23,48,73':'218,235,252'}}
-function drawField(t,C){f.clearRect(0,0,W,H);f.font='10px Consolas,monospace';f.textBaseline='middle';const cell=W<640?24:22,sy=scrollY*.17,off=sy%cell;for(let y=-1;y<H/cell+1;y++){for(let x=0;x<W/cell+1;x++){const py=y*cell-off,px=x*cell,gy=y+Math.floor(sy/cell),v=noise(x+t*.25,gy-t*.22),near=Math.max(0,1-Math.hypot(px-pointer.x,py-pointer.y)/190),alpha=Math.max(0,(v+.1)*.035)+near*.17+scrollImpulse*.035;if(alpha<.014)continue;const k=hash(x+Math.floor(t*.3),gy);f.fillStyle=`rgba(${C.accent},${Math.min(.25,alpha)})`;if(k>.93||near>.5)f.fillText('07S.:+'[Math.floor(k*6)],px,py);else f.fillRect(px,py,1.5,1.5)}}for(const r of ripples){const age=t-r.t;if(age>1.8)continue;f.beginPath();f.strokeStyle=`rgba(${C.accent},${.12*(1-age/1.8)})`;f.arc(r.x,r.y,age*230,0,Math.PI*2);f.stroke()}}
+// Page background: same character field as 07S (bgfield.js) — sparse drifting dots, a cursor flashlight that
+// reveals characters mixed with 0/7/S, scroll parallax that brightens with speed, and 07S words that glitch in.
+const fHash=(x,y)=>{const v=Math.sin(x*127.1+y*311.7)*43758.5453;return v-Math.floor(v)}
+const fSmooth=v=>v<=0?0:v>=1?1:v*v*(3-2*v)
+function fNoise(x,y){const ix=Math.floor(x),iy=Math.floor(y),fx=fSmooth(x-ix),fy=fSmooth(y-iy),a=fHash(ix,iy),b=fHash(ix+1,iy),c=fHash(ix,iy+1),d=fHash(ix+1,iy+1);return a+(b-a)*fx+(c-a)*fy+(a-b-c+d)*fx*fy}
+let fieldLight=0,fieldLastY=scrollY,fieldVel=0
+const FIELD_RAMP='.·:-=+*xo%#@',FIELD_BRAND='07S',FIELD_GLITCH='07S#%/\\<>=+*'
+function drawField(t,C){f.clearRect(0,0,W,H)
+const light=root.dataset.theme==='light',dot=light?'17,24,32':'247,247,248',ch=light?'83,97,113':'141,142,151'
+const cell=W<640?18:16,fs=W<640?10:11,sy=scrollY
+fieldVel+=((sy-fieldLastY)-fieldVel)*.25;fieldLastY=sy
+const speed=Math.min(1,Math.abs(fieldVel)/45),on=pointer.x>-500&&!matchMedia('(hover: none)').matches
+fieldLight+=((on?1:0)-fieldLight)*.08
+const par=sy*.35,rowShift=Math.floor(par/cell),off=par-rowShift*cell,cols=Math.ceil(W/cell)+1,rows=Math.ceil(H/cell)+2,R=190,dots=[],chars=[]
+for(let r=0;r<rows;r++){const gy=r+rowShift,py=r*cell-off
+for(let c=0;c<cols;c++){const px=c*cell
+let v=(fNoise(c*.07+t*.04,gy*.07-t*.03)-.56)*2.6
+if(speed>.02)v+=speed*.55*fHash(c,gy+Math.floor(t*8))
+let near=0
+if(fieldLight>.01){near=fSmooth(1-Math.hypot(px+cell/2-pointer.x,py+cell/2-pointer.y)/R)*fieldLight;v+=near*(.55+.45*fHash(c*3.1,gy*1.7))}
+if(v<.06)continue
+if(near>.12)chars.push(px,py,Math.min(1,v),near)
+else if(v>.42)chars.push(px,py,Math.min(1,v),.3+(v-.42)*.4)
+else dots.push(px+cell/2-1,py+cell/2-1,Math.min(1,v))}}
+f.fillStyle=`rgb(${dot})`
+for(let i=0;i<dots.length;i+=3){f.globalAlpha=.1+dots[i+2]*.32;f.fillRect(dots[i],dots[i+1],2,2)}
+f.font=`400 ${fs}px Consolas,"SFMono-Regular",monospace`;f.textBaseline='top'
+const lastIdx=FIELD_RAMP.length-1,slot=Math.floor(t*1.5),marks=[]
+f.fillStyle=`rgb(${ch})`
+for(let j=0;j<chars.length;j+=4){const cx=chars[j],cy=chars[j+1],k=fHash(cx*.119+slot*3.7,(cy+par)*.143)
+if(k>.74){marks.push(cx,cy,chars[j+3],FIELD_BRAND.charAt(Math.floor(k*1000)%3));continue}
+f.globalAlpha=Math.min(.5,chars[j+3]*.62);f.fillText(FIELD_RAMP.charAt(Math.floor(chars[j+2]*lastIdx)),cx+cell*.2,cy+cell*.12)}
+f.fillStyle=`rgb(${dot})`
+for(let q=0;q<marks.length;q+=4){f.globalAlpha=Math.min(.75,marks[q+2]);f.fillText(marks[q+3],marks[q]+cell*.2,marks[q+1]+cell*.12)}
+for(let wr=0;wr<rows;wr++){const wy=wr+rowShift
+for(let wc=0;wc+2<cols;wc+=3){const life=t/5+fHash(wc*.31,wy*.57)*9,gen=Math.floor(life)
+if(fHash(wc*1.7+gen*5.3,wy*2.9)<.986)continue
+const ph=life-gen,a=Math.sin(ph*Math.PI),wx=wc*cell,wpy=wr*cell-off
+const nearW=fieldLight>.01?fSmooth(1-Math.hypot(wx+cell*1.5-pointer.x,wpy+cell/2-pointer.y)/260)*fieldLight:0
+f.globalAlpha=Math.min(.8,a*.45+nearW*.35)
+for(let w=0;w<3;w++){const letter=ph>.18+w*.06?FIELD_BRAND.charAt(w):FIELD_GLITCH.charAt(Math.floor(fHash(wc+w,wy+Math.floor(t*12))*FIELD_GLITCH.length));f.fillText(letter,wx+w*cell+cell*.2,wpy+cell*.12)}}}
+f.globalAlpha=1
+for(const r of ripples){const age=t-r.t
+if(age>1.8)continue
+f.beginPath();f.strokeStyle=`rgba(${dot},${.12*(1-age/1.8)})`;f.arc(r.x,r.y,age*230,0,Math.PI*2);f.stroke()}}
 function drawHero(t,C){h.clearRect(0,0,HW,HH);if(!mask)return;const rect=hero.getBoundingClientRect();h.font=mode==='braille'?'13px Consolas,monospace':'10px Consolas,monospace';h.textBaseline='top';for(let y=0;y<rows;y++){for(let x=0;x<cols;x++){const px=x*7,py=y*11,m=mask[y*cols+x],n=(noise(x*.7+t*.9,y*.8-t*.7)+2)/4,near=Math.max(0,1-Math.hypot(px+rect.left-pointer.x,py+rect.top-pointer.y)/100);const i=y*cols+x;if(!paused)trail[i]=Math.max(near,trail[i]*.945);const after=trail[i]||0;let v=m*(.68+.32*n)+(m<.1?.07*Math.max(0,n-.55):0)+after*.36;const sweep=Math.exp(-Math.pow((x/cols-(Math.sin(t*.35)*.65+.5))/.075,2));v+=m*sweep*.16;for(const r of ripples){const age=t-r.t,band=Math.abs(Math.hypot(px+rect.left-r.x,py+rect.top-r.y)-age*230);if(age<1.5&&band<20)v+=.35*(1-band/20)*(1-age/1.5)}if(v<.035)continue;h.fillStyle=`rgba(${m>.1?C.ink:C.accent},${Math.min(.95,v)})`;if(mode==='ascii')h.fillText(ramp[Math.min(ramp.length-1,Math.floor(v*(ramp.length-1)))],px,py);else if(mode==='braille'){const bits=[1,2,4,64,8,16,32,128];let dots=0;for(let j=0;j<8;j++)if(hash(x*2+j,y+j*.3)<v*.92)dots|=bits[j];if(dots)h.fillText(String.fromCharCode(0x2800+dots),px,py)}else if(mode==='halftone'){const s=Math.min(3,v*3.4);h.beginPath();h.arc(px+3.5,py+5.5,s,0,Math.PI*2);h.fill()}else if(v>hash(x,y)*.7)h.fillRect(px,py,3,5)}}}
 function frame(now){requestAnimationFrame(frame);if(document.hidden)return;if(paused&&!renderOnce)return;if(!renderOnce&&now-last<(W<640?50:40))return;const delta=last?Math.min((now-last)/1000,.1):0;last=now;if(!paused){time+=delta;scrollImpulse*=.91;}const C=colors();drawField(time,C);if(heroVisible)drawHero(time,C);renderOnce=false;ripples=ripples.filter(r=>time-r.t<1.8)}
 motion.addEventListener('click',()=>{paused=!paused;updateMotion()});theme.addEventListener('click',()=>{const light=root.dataset.theme!=='light';root.dataset.theme=light?'light':'dark';theme.textContent=light?text().dark:text().light;try{localStorage.setItem('studio7-theme',root.dataset.theme)}catch(e){}theme.setAttribute('aria-pressed',String(light));renderOnce=true});document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(a=>a.setAttribute('aria-pressed',String(a===b)));renderOnce=true}));
