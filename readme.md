@@ -37,3 +37,7 @@
 | `7logo-blue` | `05-split-black-transparent` |
 | `7logo-blue-1` | `05-split-black-transparent` |
 | `7logo-new-01` | `05-split-black-transparent` |
+
+## 动态资源首页
+
+首页和 test.html 使用相同的完整资源库，18 款按五类全部展开。支持 ASCII、DITHER、HALFTONE 首屏、全页字符场、深浅主题、暂停动画及复制资源地址。系统启用减少动态时默认暂停，可手动开启；手机降低字符密度，首屏离屏暂停重绘。预览图片在独立边界内完整缩放，不挤压标题与下载入口。
