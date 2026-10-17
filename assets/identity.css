@@ -48,3 +48,6 @@
   .asset-actions>:nth-child(2){border-right:0}
 }
 @media(max-width:360px){.topbar>.brand span{display:none}}
+/* iOS: keep arrows and symbols as text, not colour emoji. */
+body{font-variant-emoji:text}
+button{-webkit-appearance:none;appearance:none}
